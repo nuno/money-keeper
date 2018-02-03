@@ -4,5 +4,13 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebase: {
+    apiKey: 'AIzaSyACNXXIaypsdkzXarU4j_dEajpkgVez_wc',
+    authDomain: 'money-keeper-pwa.firebaseapp.com',
+    databaseURL: 'https://money-keeper-pwa.firebaseio.com',
+    projectId: 'money-keeper-pwa',
+    storageBucket: 'money-keeper-pwa.appspot.com',
+    messagingSenderId: '931375082243'
+  }
 };
