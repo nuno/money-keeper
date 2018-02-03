@@ -12,4 +12,8 @@
     <a routerLink="/expenses/add">Add expence</a>
   </li>
 </ul>
+<div *ngIf="user$ | async as user">
+  <p>{{user.displayName || user.email}}</p>
+  <button (click)="signOut()">Sign out</button>
+</div>
 <router-outlet></router-outlet>

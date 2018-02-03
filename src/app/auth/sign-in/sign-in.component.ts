@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {Router} from '@angular/router';
-
+import {AngularFireAuth} from 'angularfire2/auth';
+import * as firebase from 'firebase/app';
 
 @Component({
   selector: 'mk-sign-in',
@@ -11,14 +12,16 @@ import {Router} from '@angular/router';
 })
 export class SignInComponent implements OnInit {
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private afAuth: AngularFireAuth) {
   }
 
   ngOnInit() {
   }
 
-  signIn() {
-    this.router.navigate(['/expenses']);
+  signIn (): void {
+    this.afAuth.auth
+      .signInWithPopup(new firebase.auth.GoogleAuthProvider())
+      .then(() => this.router.navigate(['/expenses']))
+      .catch(console.error);
   }
-
 }
