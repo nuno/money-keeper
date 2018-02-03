@@ -18,7 +18,7 @@ export class SignInComponent implements OnInit {
   }
 
   signIn() {
-    this.router.navigate(['/expences']);
+    this.router.navigate(['/expenses']);
   }
 
 }

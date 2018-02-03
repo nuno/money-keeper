@@ -13,7 +13,7 @@ const routes: Routes = [
     loadChildren: './auth/auth.module#AuthModule'
   },
   {
-    path: 'expences',
+    path: 'expenses',
     loadChildren: './expences/expences.module#ExpencesModule'
   }
 ];
