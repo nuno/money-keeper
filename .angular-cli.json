@@ -56,6 +56,29 @@
   },
   "defaults": {
     "styleExt": "sass",
-    "component": {}
+    "class": {
+      "spec": true
+    },
+    "component": {
+      "changeDetection": "OnPush",
+      "viewEncapsulation": "None",
+      "spec": false
+    },
+    "directive": {
+      "flat": true,
+      "spec": false
+    },
+    "pipe": {
+      "flat": true,
+      "spec": false
+    },
+    "service": {
+      "flat": true,
+      "spec": false
+    },
+    "guard": {
+      "flat": true,
+      "spec": false
+    }
   }
 }
