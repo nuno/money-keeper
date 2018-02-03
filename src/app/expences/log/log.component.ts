@@ -13,12 +13,22 @@ import {Router} from "@angular/router";
 })
 export class LogComponent implements OnInit {
   expenses$: Observable<any[]>;
+  categories: any[];
 
   constructor(private db: AngularFirestore, private router: Router, private afAuth: AngularFireAuth) {
+    let self = this;
     this.afAuth.authState.subscribe(user => {
       let path = `users/${user.uid}/expenses`;
-      console.log(`path: ${JSON.stringify(path)}`);
       this.expenses$ = this.db.collection(path).valueChanges();
+
+      this.db.collection(`users/${user.uid}/categories`).snapshotChanges().subscribe(categories => {
+        self.categories = categories.map(c => {
+          let data = c.payload.doc.data();
+          data.id = c.payload.doc.id;
+          return data;
+        });
+        console.log(`self.categories: ${JSON.stringify(self.categories)}`);
+      });
 
       // this.db.collection(path).valueChanges().subscribe(() => {
       //   console.log(`new Date: ${JSON.stringify(new Date())}`);
@@ -31,5 +41,13 @@ export class LogComponent implements OnInit {
 
   addExpense() {
     this.router.navigate(['expenses/add']);
+  }
+
+  getCategory(categoryId) {
+    for (let x of this.categories){
+      if (x.id === categoryId){
+        return x.title;
+      }
+    }
   }
 }

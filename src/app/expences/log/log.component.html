@@ -3,6 +3,7 @@
   <li *ngFor="let expense of expenses$ | async">
     <span>{{expense.comment}}</span>
     <span>{{expense.amount}}</span>
+    <span>[{{getCategory(expense.category)}}]</span>
   </li>
   <button (click)="addExpense()">Add expense</button>
 </ul>
