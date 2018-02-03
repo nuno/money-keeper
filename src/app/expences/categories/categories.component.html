@@ -1,7 +1,21 @@
-<p>Categories</p>
-<ul>
-  <li *ngFor="let category of categories | async">
+<h1 class="m-t-0">Categories</h1>
+<div class="categories">
+  <div *ngFor="let category of categories | async"
+       (click)="addExpense(category)"
+       class="category">
+    <button mat-fab>
+      <mat-icon>{{category.icon}}</mat-icon>
+    </button>
     <span>{{category.title}}</span>
-  </li>
-  <button (click)="addCategory()">Add category</button>
-</ul>
+  </div>
+  <button mat-fab
+          color="warn"
+          class="add-category-button"
+          (click)="addCategory()">
+    <mat-icon>add</mat-icon>
+  </button>
+  <button mat-fab color="primary" routerLink="/expenses/add"
+          class="main-fab-button">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

@@ -1,5 +1,6 @@
 export interface Category {
-  $key?: string;
+  id?: string;
   title: string;
+  icon: string;
   createdAt: Date;
 }

@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {Category} from '../../data-access/category.interface';
-import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {AngularFireAuth} from 'angularfire2/auth';
 import {AngularFirestore, AngularFirestoreCollection} from 'angularfire2/firestore';
-import {Observable} from "rxjs/Observable";
-import {AngularFireAuth} from "angularfire2/auth";
+import {Category} from '../../data-access/category.interface';
+import {MyErrorStateMatcher} from '../../shared/helpers/forms.helper';
+
 
 @Component({
   selector: 'mk-main-create-category',
@@ -14,6 +15,7 @@ import {AngularFireAuth} from "angularfire2/auth";
 export class MainCreateCategoryComponent implements OnInit {
   form: FormGroup;
   categories: AngularFirestoreCollection<any>;
+  matcher = new MyErrorStateMatcher();
 
   constructor(private router: Router,
               private fb: FormBuilder, private db: AngularFirestore, private afAuth: AngularFireAuth) {
@@ -31,11 +33,12 @@ export class MainCreateCategoryComponent implements OnInit {
       return;
     }
     const category: Category = {
-      title: this.form.value.title, createdAt: new Date()
+      title: this.form.value.title,
+      icon: this.form.value.icon || 'help_outline',
+      createdAt: new Date()
     };
 
     console.log(`category: ${JSON.stringify(category)}`);
-
 
 
     this.categories.add(category)
@@ -60,7 +63,8 @@ export class MainCreateCategoryComponent implements OnInit {
 
   private initForm() {
     this.form = this.fb.group({
-      'title': ['', Validators.required]
+      'title': ['', Validators.required],
+      'icon': ['']
     });
   }
 }

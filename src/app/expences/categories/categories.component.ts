@@ -1,8 +1,10 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Router} from '@angular/router';
+import {AngularFireAuth} from 'angularfire2/auth';
 import {AngularFirestore} from 'angularfire2/firestore';
-import {Observable} from "rxjs/Observable";
-import {Router} from "@angular/router";
-import {AngularFireAuth} from "angularfire2/auth";
+import {filter, map, switchMap} from 'rxjs/operators';
+import {getEntityWithId} from '../../shared/helpers/firestore.helper';
+
 
 @Component({
   selector: 'mk-categories',
@@ -12,19 +14,30 @@ import {AngularFireAuth} from "angularfire2/auth";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CategoriesComponent implements OnInit {
-  categories: Observable<any[]>;
+  categories = this.afAuth.authState
+    .pipe(
+      filter(user => !!user),
+      switchMap(user => this.db.collection(`users/${user.uid}/categories`)
+        .snapshotChanges()
+        .pipe(
+          map(getEntityWithId)
+        )
+      )
+    );
 
   constructor(private db: AngularFirestore, private router: Router, private afAuth: AngularFireAuth) {
-    this.afAuth.authState.subscribe(user => {
-      this.categories = this.db.collection(`users/${user.uid}/categories`).valueChanges();
-    });
   }
 
   ngOnInit() {
+
   }
 
 
   addCategory() {
-    this.router.navigate(['expenses/add-category']);
+    this.router.navigate(['/expenses/add-category']);
+  }
+
+  addExpense(category) {
+    this.router.navigate([`/expenses/add/${category.id}`]);
   }
 }

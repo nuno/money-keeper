@@ -32,10 +32,6 @@
         <mat-icon>assessment</mat-icon>
         <span>Statistics</span>
       </a>
-      <a mat-list-item routerLink="/expenses/add">
-        <mat-icon>assessment</mat-icon>
-        <span>Add</span>
-      </a>
     </mat-nav-list>
   </mat-sidenav>
 
@@ -49,9 +45,8 @@
       </mat-toolbar-row>
     </mat-toolbar>
 
-    <router-outlet></router-outlet>
-    <button mat-fab color="primary" routerLink="/expenses/add">
-      <mat-icon>add</mat-icon>
-    </button>
+    <div class="content-wrapper">
+      <router-outlet></router-outlet>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

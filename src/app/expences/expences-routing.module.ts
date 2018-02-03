@@ -26,6 +26,10 @@ const routes: Routes = [
         component: AddExpenceComponent
       },
       {
+        path: 'add/:categoryId',
+        component: AddExpenceComponent
+      },
+      {
         path: 'statistics',
         component: StatisticsComponent
       },

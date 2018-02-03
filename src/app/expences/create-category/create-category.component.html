@@ -1,25 +1,39 @@
-<div class="container">
-  <h4>
-    Add category
-  </h4>
-
-  <form [formGroup]="form"
-        (ngSubmit)="submit()"
-        class="fullwidth">
-    <input label="Title"
+<h1 class="m-t-0">Create category</h1>
+<form [formGroup]="form"
+      (ngSubmit)="submit()"
+      novalidate>
+  <mat-form-field>
+    <input matInput
+           label="Title"
+           placeholder="Title"
            formControlName="title"
-           name="title  "
-           type="text">
+           name="title"
+           [errorStateMatcher]="matcher">
+    <mat-error *ngIf="form.controls['title'].hasError('required')">
+      Field is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput
+           label="Icon"
+           placeholder="Icon"
+           formControlName="icon"
+           name="icon">
+    <mat-hint>Web icon name from <a href="https://material.io/icons/" target="_blank">Material icons</a></mat-hint>
+  </mat-form-field>
 
-    <div class="fab-container fab-container--right">
-      <button type="submit"
-              mdl-button
-              mdl-button-type="fab"
-              mdl-colored="primary"
-              mdl-ripple>
-        Done
-      </button>
-    </div>
+  <button mat-fab
+          color="accent"
+          class="secondary-fab-button"
+          routerLink="/expenses">
+    <mat-icon>close</mat-icon>
+  </button>
 
-  </form>
-</div>
+  <button mat-fab
+          color="primary"
+          class="main-fab-button"
+          type="submit">
+    <mat-icon>add</mat-icon>
+  </button>
+
+</form>
