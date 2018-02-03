@@ -1,48 +1,56 @@
-<div class="container">
-  <h4>
-    Add expense
-  </h4>
+<h1 class="m-t-0">Add expense</h1>
 
-  <form [formGroup]="form"
-        (ngSubmit)="submit()"
-        class="fullwidth">
-    <input label="Comment"
+<form [formGroup]="form"
+      (ngSubmit)="submit()"
+      novalidate>
+
+  <mat-form-field>
+    <input matInput
+           label="Comment"
+           placeholder="Comment"
            formControlName="comment"
            name="comment"
-           type="text">
-    <input label="Amount"
+           [errorStateMatcher]="matcher">
+    <mat-error *ngIf="form.controls['comment'].hasError('required')">
+      Field is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput
+           label="Amount"
            formControlName="amount"
+           placeholder="Amount, $"
            name="amount"
            type="number">
-    <select formControlName="category"
-                label="Category"
-                floating-label>
-      <option
-        *ngFor="let category of categories"
+    <mat-error *ngIf="form.controls['amount'].hasError('required')">
+      Field is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
 
-        [value]="category?.id">
+  <mat-form-field>
+    <mat-select placeholder="Category" formControlName="category">
+      <mat-option *ngFor="let category of categories" [value]="category?.id">
         {{category?.title}}
-      </option>
-    </select>
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.controls['category'].hasError('required')">
+      Field is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
 
-    <div class="fab-container fab-container--right">
-      <button type="submit"
-              mdl-button
-              mdl-button-type="fab"
-              mdl-colored="primary"
-              mdl-ripple>
-        Done
-      </button>
-    </div>
 
-    <!--<div class="fab-container fab-container&#45;&#45;left">-->
-      <!--<button (click)="goToMainPage()"-->
-              <!--type="button"-->
-              <!--mdl-button-->
-              <!--mdl-button-type="fab"-->
-              <!--mdl-ripple>-->
-        <!--Close-->
-      <!--</button>-->
-    <!--</div>-->
-  </form>
-</div>
+  <button mat-fab
+          color="accent"
+          class="secondary-fab-button"
+          routerLink="/expenses">
+    <mat-icon>close</mat-icon>
+  </button>
+
+  <button mat-fab
+          color="primary"
+          class="main-fab-button"
+          type="submit">
+    <mat-icon>add</mat-icon>
+  </button>
+</form>

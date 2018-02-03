@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {AngularFirestore, AngularFirestoreCollection} from 'angularfire2/firestore';
 import {Expense} from '../../data-access/expense.interface';
 import {AngularFireAuth} from "angularfire2/auth";
+import {MyErrorStateMatcher} from '../../shared/helpers/forms.helper';
 
 @Component({
   selector: 'mk-add-expence',
@@ -16,6 +17,7 @@ export class AddExpenceComponent implements OnInit {
   form: FormGroup;
   expenses: AngularFirestoreCollection<any>;
   categories: any[];
+  matcher = new MyErrorStateMatcher();
 
   constructor(private router: Router, private fb: FormBuilder, private db: AngularFirestore, private afAuth: AngularFireAuth) {
     let self = this;
@@ -81,7 +83,7 @@ export class AddExpenceComponent implements OnInit {
     this.form = this.fb.group({
       'amount': [undefined, Validators.required],
       'category': [undefined, Validators.required],
-      'comment': [undefined]
+      'comment': [undefined, Validators.required]
     });
   }
 }
