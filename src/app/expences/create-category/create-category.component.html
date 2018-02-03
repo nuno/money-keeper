@@ -1,0 +1,25 @@
+<div class="container">
+  <h4>
+    Add category
+  </h4>
+
+  <form [formGroup]="form"
+        (ngSubmit)="submit()"
+        class="fullwidth">
+    <input label="Title"
+           formControlName="title"
+           name="title  "
+           type="text">
+
+    <div class="fab-container fab-container--right">
+      <button type="submit"
+              mdl-button
+              mdl-button-type="fab"
+              mdl-colored="primary"
+              mdl-ripple>
+        Done
+      </button>
+    </div>
+
+  </form>
+</div>

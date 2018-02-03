@@ -5,6 +5,7 @@ import {CategoriesComponent} from './categories/categories.component';
 import {ExpencesComponent} from './expences.component';
 import {LogComponent} from './log/log.component';
 import {StatisticsComponent} from './statistics/statistics.component';
+import {MainCreateCategoryComponent} from "./create-category/create-category.component";
 
 
 const routes: Routes = [
@@ -27,6 +28,10 @@ const routes: Routes = [
       {
         path: 'statistics',
         component: StatisticsComponent
+      },
+      {
+        path: 'add-category',
+        component: MainCreateCategoryComponent
       },
     ]
   },

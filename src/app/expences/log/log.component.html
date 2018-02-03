@@ -1,3 +1,7 @@
-<p>
-  log works!
-</p>
+<p>Expenses</p>
+<ul>
+  <li *ngFor="let expense of expenses | async">
+    <span>{{expense.comment}}</span>
+    <span>{{expense.amount}}</span>
+  </li>
+</ul>

@@ -7,6 +7,7 @@ import { StatisticsComponent } from './statistics/statistics.component';
 import {ExpencesRoutingModule} from './expences-routing.module';
 import { ExpencesComponent } from './expences.component';
 import {SharedModule} from '../shared/shared.module';
+import {MainCreateCategoryComponent} from "./create-category/create-category.component";
 
 @NgModule({
   imports: [
@@ -14,6 +15,6 @@ import {SharedModule} from '../shared/shared.module';
     ExpencesRoutingModule,
     SharedModule
   ],
-  declarations: [CategoriesComponent, AddExpenceComponent, LogComponent, StatisticsComponent, ExpencesComponent]
+  declarations: [CategoriesComponent, AddExpenceComponent, LogComponent, StatisticsComponent, ExpencesComponent, MainCreateCategoryComponent]
 })
 export class ExpencesModule { }

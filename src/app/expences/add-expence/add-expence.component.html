@@ -1,3 +1,48 @@
-<p>
-  add-expence works!
-</p>
+<div class="container">
+  <h4>
+    Add expense
+  </h4>
+
+  <form [formGroup]="form"
+        (ngSubmit)="submit()"
+        class="fullwidth">
+    <input label="Comment"
+           formControlName="comment"
+           name="comment"
+           type="text">
+    <input label="Amount"
+           formControlName="amount"
+           name="amount"
+           type="number">
+    <select formControlName="category"
+                label="Category"
+                floating-label>
+      <option
+        *ngFor="let category of categories | async"
+
+        [value]="category?.$key">
+        {{category?.title}}
+      </option>
+    </select>
+
+    <div class="fab-container fab-container--right">
+      <button type="submit"
+              mdl-button
+              mdl-button-type="fab"
+              mdl-colored="primary"
+              mdl-ripple>
+        Done
+      </button>
+    </div>
+
+    <!--<div class="fab-container fab-container&#45;&#45;left">-->
+      <!--<button (click)="goToMainPage()"-->
+              <!--type="button"-->
+              <!--mdl-button-->
+              <!--mdl-button-type="fab"-->
+              <!--mdl-ripple>-->
+        <!--Close-->
+      <!--</button>-->
+    <!--</div>-->
+  </form>
+</div>
