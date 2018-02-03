@@ -18,7 +18,7 @@
                 label="Category"
                 floating-label>
       <option
-        *ngFor="let category of categories | async"
+        *ngFor="let category of categories$ | async"
 
         [value]="category?.$key">
         {{category?.title}}

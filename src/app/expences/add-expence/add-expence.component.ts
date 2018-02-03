@@ -1,9 +1,9 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {AngularFirestore} from 'angularfire2/firestore';
+import {AngularFirestore, AngularFirestoreCollection} from 'angularfire2/firestore';
 import {Expense} from '../../data-access/expense.interface';
-import {Category} from '../../data-access/category.interface';
+import {AngularFireAuth} from "angularfire2/auth";
 import {Observable} from "rxjs/Observable";
 
 @Component({
@@ -15,10 +15,14 @@ import {Observable} from "rxjs/Observable";
 })
 export class AddExpenceComponent implements OnInit {
   form: FormGroup;
-  categories: Observable<any[]>;
+  expenses: AngularFirestoreCollection<any>;
+  categories$: Observable<any[]>;
 
-  constructor(private router: Router, private fb: FormBuilder, private db: AngularFirestore) {
-    this.categories = this.db.collection('categories').valueChanges();
+  constructor(private router: Router, private fb: FormBuilder, private db: AngularFirestore, private afAuth: AngularFireAuth) {
+    this.afAuth.authState.subscribe(user => {
+      this.categories$ = this.db.collection(`users/${user.uid}/categories`).valueChanges();
+      this.expenses = this.db.collection(`users/${user.uid}/expenses`);
+    });
   }
 
   ngOnInit() {
@@ -37,7 +41,7 @@ export class AddExpenceComponent implements OnInit {
     };
 
     console.log(`expense: ${JSON.stringify(expense)}`);
-    this.db.collection('expenses').add(expense)
+    this.expenses.add(expense)
       .then(function (docRef) {
         console.log('Expense added: ', docRef.id);
       })
@@ -45,7 +49,7 @@ export class AddExpenceComponent implements OnInit {
         console.error('Error adding expense: ', error);
       });
 
-    this.router.navigate(['/expenses']);
+    this.router.navigate(['/expenses/logs']);
   }
 
   isSubmitDisabled(): boolean {

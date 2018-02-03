@@ -2,7 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Category} from '../../data-access/category.interface';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AngularFirestore} from 'angularfire2/firestore';
+import {AngularFirestore, AngularFirestoreCollection} from 'angularfire2/firestore';
+import {Observable} from "rxjs/Observable";
+import {AngularFireAuth} from "angularfire2/auth";
 
 @Component({
   selector: 'mk-main-create-category',
@@ -11,12 +13,16 @@ import {AngularFirestore} from 'angularfire2/firestore';
 })
 export class MainCreateCategoryComponent implements OnInit {
   form: FormGroup;
+  categories: AngularFirestoreCollection<any>;
 
   constructor(private router: Router,
-              private fb: FormBuilder, private db: AngularFirestore) {
+              private fb: FormBuilder, private db: AngularFirestore, private afAuth: AngularFireAuth) {
   }
 
   ngOnInit() {
+    this.afAuth.authState.subscribe(user => {
+      this.categories = this.db.collection(`users/${user.uid}/categories`);
+    });
     this.initForm();
   }
 
@@ -29,7 +35,10 @@ export class MainCreateCategoryComponent implements OnInit {
     };
 
     console.log(`category: ${JSON.stringify(category)}`);
-    this.db.collection('categories').add(category)
+
+
+
+    this.categories.add(category)
       .then(function (docRef) {
         console.log('Category added: ', docRef.id);
       })
