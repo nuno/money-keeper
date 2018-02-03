@@ -4,7 +4,6 @@ import {Router} from '@angular/router';
 import {AngularFirestore, AngularFirestoreCollection} from 'angularfire2/firestore';
 import {Expense} from '../../data-access/expense.interface';
 import {AngularFireAuth} from "angularfire2/auth";
-import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'mk-add-expence',
@@ -16,13 +15,29 @@ import {Observable} from "rxjs/Observable";
 export class AddExpenceComponent implements OnInit {
   form: FormGroup;
   expenses: AngularFirestoreCollection<any>;
-  categories$: Observable<any[]>;
+  categories: any[];
 
   constructor(private router: Router, private fb: FormBuilder, private db: AngularFirestore, private afAuth: AngularFireAuth) {
+    let self = this;
     this.afAuth.authState.subscribe(user => {
-      this.categories$ = this.db.collection(`users/${user.uid}/categories`).valueChanges();
-      this.expenses = this.db.collection(`users/${user.uid}/expenses`);
-    });
+        this.db.collection(`users/${user.uid}/categories`).snapshotChanges().subscribe(categories => {
+          self.categories = categories.map(c => {
+            let data = c.payload.doc.data();
+            data.id = c.payload.doc.id;
+            return data;
+          });
+        });
+
+
+        // .
+        // valueChanges().subscribe((categories) => {
+        //   console.log(`categories: ${JSON.stringify(categories)}`);
+        //   // this.categories$
+        // });
+        this.expenses = this.db.collection(`users/${user.uid}/expenses`);
+      }
+    )
+    ;
   }
 
   ngOnInit() {
@@ -30,7 +45,8 @@ export class AddExpenceComponent implements OnInit {
   }
 
   submit(): void {
-    if (this.isSubmitDisabled()) {
+    if (this.isSubmitDisabled()
+    ) {
       return;
     }
     const expense: Expense = {
@@ -61,7 +77,7 @@ export class AddExpenceComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
-  private initForm() {
+  initForm() {
     this.form = this.fb.group({
       'amount': [undefined, Validators.required],
       'category': [undefined, Validators.required],
