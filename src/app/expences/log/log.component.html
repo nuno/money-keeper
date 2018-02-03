@@ -1,9 +1,14 @@
-<p>Expenses</p>
-<ul>
-  <li *ngFor="let expense of expenses$ | async">
-    <span>{{expense.comment}}</span>
-    <span>{{expense.amount}}</span>
-    <span>[{{getCategory(expense.category)}}]</span>
-  </li>
-  <button (click)="addExpense()">Add expense</button>
-</ul>
+<h1 class="m-t-0">Expenses</h1>
+<mat-card *ngFor="let expense of expenses$ | async" class="expense">
+  <mat-card-header>
+    <mat-card-title>{{expense.comment}}</mat-card-title>
+    <mat-card-subtitle>{{getCategory(expense.category)}}</mat-card-subtitle>
+  </mat-card-header>
+  <div>
+    ${{expense.amount}}
+  </div>
+</mat-card>
+<button mat-fab color="primary" routerLink="/expenses/add"
+        class="main-fab-button">
+  <mat-icon>add</mat-icon>
+</button>
