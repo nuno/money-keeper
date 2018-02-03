@@ -6,11 +6,13 @@ import { LogComponent } from './log/log.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import {ExpencesRoutingModule} from './expences-routing.module';
 import { ExpencesComponent } from './expences.component';
+import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    ExpencesRoutingModule
+    ExpencesRoutingModule,
+    SharedModule
   ],
   declarations: [CategoriesComponent, AddExpenceComponent, LogComponent, StatisticsComponent, ExpencesComponent]
 })
