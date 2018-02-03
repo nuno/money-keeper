@@ -8,12 +8,17 @@ import {ExpencesRoutingModule} from './expences-routing.module';
 import { ExpencesComponent } from './expences.component';
 import {SharedModule} from '../shared/shared.module';
 import {MainCreateCategoryComponent} from "./create-category/create-category.component";
+// import {BrowserModule} from "@angular/platform-browser";
+import {NgxChartsModule} from "@swimlane/ngx-charts";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   imports: [
     CommonModule,
     ExpencesRoutingModule,
-    SharedModule
+    SharedModule,
+    // BrowserAnimationsModule,
+    NgxChartsModule
   ],
   declarations: [CategoriesComponent, AddExpenceComponent, LogComponent, StatisticsComponent, ExpencesComponent, MainCreateCategoryComponent]
 })

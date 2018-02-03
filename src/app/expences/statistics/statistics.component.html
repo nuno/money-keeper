@@ -1,3 +1,9 @@
-<p>
-  statistics works!
-</p>
+<!--<div *ngIf="single">-->
+
+  <ngx-charts-pie-chart
+    [view]="view"
+    [results]="data"
+    [labels]="showLabels"
+    (select)="onSelect($event)">
+  </ngx-charts-pie-chart>
+<!--</div>-->

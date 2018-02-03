@@ -16,23 +16,18 @@ export class LogComponent implements OnInit {
   categories: any[];
 
   constructor(private db: AngularFirestore, private router: Router, private afAuth: AngularFireAuth) {
-    let self = this;
+    const self = this;
     this.afAuth.authState.subscribe(user => {
-      let path = `users/${user.uid}/expenses`;
+      const path = `users/${user.uid}/expenses`;
       this.expenses$ = this.db.collection(path).valueChanges();
 
       this.db.collection(`users/${user.uid}/categories`).snapshotChanges().subscribe(categories => {
         self.categories = categories.map(c => {
-          let data = c.payload.doc.data();
+          const data = c.payload.doc.data();
           data.id = c.payload.doc.id;
           return data;
         });
-        console.log(`self.categories: ${JSON.stringify(self.categories)}`);
       });
-
-      // this.db.collection(path).valueChanges().subscribe(() => {
-      //   console.log(`new Date: ${JSON.stringify(new Date())}`);
-      // });
     });
   }
 
